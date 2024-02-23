@@ -1,35 +1,43 @@
-import { Component } from '@angular/core';
-import { bootstrapApplication } from '@angular/platform-browser';
+import {Component, importProvidersFrom} from '@angular/core';
+import {FormsModule} from '@angular/forms';
+import {bootstrapApplication} from '@angular/platform-browser';
 import 'zone.js';
-import { DropdownModule } from 'primeng/dropdown';
-import { FormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {DropdownModule} from 'primeng/dropdown';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  template: `
-     <p-dropdown [options]="items"
-                 placeholder="Select item"></p-dropdown>
-  `,
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    DropdownModule,
-    FormsModule,
-  ],
+    selector: 'app-root',
+    standalone: true,
+    template: `
+        Primitive number options, editable:<br>
+        <p-dropdown [options]="items"
+                    [editable]="true"
+                    placeholder="Select item"></p-dropdown>
+        <br>
+        <br>
+        Primitive number options, filter:<br>
+        <p-dropdown [options]="items"
+                    [filter]="true"
+                    placeholder="Select item"></p-dropdown>
+    `,
+    imports: [
+        DropdownModule,
+        FormsModule,
+    ],
 })
 export class App {
-  selectedItem?: number;
-  name = 'Angular';
-  items: { label: string; value: number }[] = [];
-
-  constructor() {
-    for (let i = 0; i < 10000; i++) {
-      this.items.push({ label: 'Item ' + i, value: i });
+    name = 'Angular';
+    items: number[] = [];
+    
+    constructor() {
+        for (let i = 0; i < 100; i++) {
+            this.items.push(i);
+        }
     }
-  }
 }
 
-bootstrapApplication(App);
+bootstrapApplication(App, {
+    providers: [
+        importProvidersFrom(BrowserAnimationsModule),
+    ],
+});
